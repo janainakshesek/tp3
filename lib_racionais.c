@@ -41,6 +41,8 @@ racional *sortear_r (){
     s->num = aleat(0,100);
     s->den = aleat(0,100);
 
+    simplifica_r(s);
+
     return s;
 }
 
@@ -63,6 +65,9 @@ int ler_r (racional *r){
 
 /* imprime um racional sem espaco em branco apos o numero e sem mudar de linha */
 void imprimir_r (racional *r){
+    
+    if (r->num == 0) 
+        printf("%d", r->num);
     printf("%d/%d ", r->num, r->den);
 }
 
@@ -125,12 +130,14 @@ void simplifica_r (racional *r){
 }
 
 /* retorna 1 caso *r1 seja menor do que *r2 */
-int menor_r (racional *r1, racional *r){
+int menor_r (racional *r1, racional *r2){
     
-    if (r1 < r) 
-        return r1;
-    else if (r < r1)
-        return r;
+    r1->num = r1->num*r2->den;
+    r2->num = r2->num*r1->den;
+
+    if (r1->num < r2->num)
+        return r1->num;
+    return r2->num;
 }
 
 /* retorna 1 caso os racionais *r1 e *r2 sejam iguais ou 0 caso contrario */
@@ -201,3 +208,4 @@ racional *dividir_r (racional *r1, racional *r2){
 
     return divide;
 }
+
